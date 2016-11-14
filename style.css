@@ -1,28 +1,82 @@
 * {
-	border: solid 1px;
 	box-sizing: border-box;
 }
 
-#wrapper {
-	margin: 50px;
-	text-align: center;
+
+
+html,
+body {
+	width: 100%;
+	height: 100%
 }
 
-#game-board{
-	max-width: 800px;
-	height: 800px;
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	background: #b3c9d9;
+
+}
+
+h1 , p {
 	display:block;
 }
 
-#game-board:nth-child(3n+1) {
+/*Style 'tiles'*/
+.tile { 
+	width: 20%;
+	height: 100px;
+	margin: 20px 2.5%;
+	border-radius: 5px;
+	display: block;
+	float: left;
+	background-color: #4CAF50;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/*Styling for h1, p and game-board */ 
+#wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	
+	height: auto;
+	padding: 5%;
+	border-radius: 10px;
+}
+
+/*Game board styling*/
+#game-board{
+	max-width: 600px;
+	width: 75%;
+	height: 500px;
+	margin: 10px auto;
+	border-radius: 10px;
+	background: #edecf1;
+	text-decoration: none;
+}
+/*Float children 4th child in the game board*/
+#game-board:nth-child(4) {
 	clear:left;
 }
 
-.tile {
-	width: 200px;
-	height: 200px;
-	margin: 2.5%;
-	display: block;
-	float: left;
 
+
+/*set up color classes*/
+.blue {
+	background-color: blue;
+}
+.red {
+	background-color: red;
+}
+.green {
+	background-color: green;
+}
+.yellow {
+	background-color: yellow;
 }
