@@ -1,4 +1,9 @@
 
+
+var tileColors = ['red', 'red', 'blue', 'blue', 'green', 'green', 'orange', 'orange'];
+var gameBoard = $('ul');
+var blue = 'blue';
+
 //Fisher–Yates shuffle function From http://stackoverflow.com/a/2450976
 function shuffle(array){
 	var unshuffled = array.length, temporary, picked;
@@ -18,11 +23,24 @@ function shuffle(array){
 	return array;
 }
 
-//Add onclick even listener to all buttons 
+
+
+
+//Add onclick even listener to all tiles 
 $(document).ready(function(){
-    $("button").click(function(){
-    	$(this).addClass();
-    });
+
+	shuffle(tileColors);
+
+	gameBoard.append($('<li class="tile ' + blue + '"><p>blue</p></li>'));
+
+
+
+	$(".tile").on("click", function(){
+		console.log("clicked");
+	});
+
+
+
 });
 
 // 1. Click button

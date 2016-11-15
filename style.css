@@ -51,7 +51,7 @@ h1 , p {
 }
 
 /*Game board styling*/
-#game-board{
+#gameBoard{
 	max-width: 600px;
 	width: 75%;
 	height: 500px;
@@ -61,7 +61,7 @@ h1 , p {
 	text-decoration: none;
 }
 /*Float children 4th child in the game board*/
-#game-board:nth-child(4) {
+#gameBoard:nth-child(4) {
 	clear:left;
 }
 
