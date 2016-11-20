@@ -47,44 +47,47 @@ function myFunction(){
 // Function to remove eventhandler from matched tiles
   function removeEvent(){
     for (var i = 0; i < clickedTiles.length; i++){
-      clickedTiles[i].classList.add('red');
+      clickedTiles[i].classList.add('match');
+      clickedTiles[i].removeChild(clickedTiles[i].childNodes[1])
       console.log(clickedTiles[0].classList)
     }
     clickedTiles[0].removeEventListener("click", compare);
     clickedTiles[1].removeEventListener("click", compare);
     clickedTiles = [];
-    /*for (var i = 0; i < clickedTiles.length; i++){
-      console.log(clickedTiles[1]);
-      clickedTiles[0].removeEventListener("click", compare);
-      console.log(clickedTiles.length);
-      clickedTiles = [];
-      console.log(clickedTiles);
-    }*/
   }
 
   // Function to store and compare clicked items
   function compare(){
     var clicked = this;
-
+    var overlay = clicked.childNodes[1];
     if(clickedTiles[0]){
       if(clickedTiles[0].id !== clicked.id){
         clickedTiles.push(clicked);
+        overlay.classList.add('show');
+        console.log(overlay.classList);
         console.log(clickedTiles);
       }
     } else {
         clickedTiles.push(clicked);
+        overlay.classList.add('show');
+        console.log('else');
         console.log(clickedTiles);
     }
-
-    if(clickedTiles.length == 2){
-      if(clickedTiles[0].classList[0] !== clickedTiles[1].classList[0] ) {
-        alert("Those don't match!");
-        clickedTiles = [];
-      } else {
-        alert("That's a match!");
-        removeEvent();
+    setTimeout(function(){
+      if(clickedTiles.length == 2){
+        if(clickedTiles[0].classList[0] !== clickedTiles[1].classList[0] ) {
+          // alert("NOPE!");
+          for (var i = 0; i < clickedTiles.length; i++){
+            clickedTiles[i].childNodes[1].classList.remove('show');
+          }
+          console.log(overlay.classList);
+          clickedTiles = [];
+        } else {
+          removeEvent();
+        }
       }
-    }
+    }, 1000)
+
   }
 
 // Function to create gameBoard tiles
@@ -96,8 +99,9 @@ function myFunction(){
   	    var li = document.createElement("li");
   	    li.className = images[i];
         li.id = "number" + i;
-  	    var textnode = '<i class="material-icons md-48">' + (images[i]) + '</i>';
-  	    li.innerHTML = textnode;
+  	    var textNode = '<i class="material-icons md-48">' + (images[i]) + '</i>';
+        textNode += '<div class="overlay"></div>'
+  	    li.innerHTML = textNode;
   	    gameBoard.appendChild(li);
   	}
     // Store list items to variable
