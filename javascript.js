@@ -1,5 +1,6 @@
 // ---------- Variables---------
 function myFunction(){
+
   // Store array of images
   var images = ['android', 'alarm', 'cloud', 'delete', 'android', 'alarm', 'cloud', 'delete'];
 
@@ -7,23 +8,29 @@ function myFunction(){
   var gameBoard = document.getElementById('gameBoard');
 
   // Store shuffle button element
-  var shuffleButton = document.getElementById('shuffleButton');
+  var newGame = document.getElementById('newGame');
+
+  // initGameBoardal empty array for storing clicked tiles
+  var clickedTiles = [];
+
 
   // ---------- Functions ----------
-
+  //Function to show alert for testing and debugging
   function showAlert() {
     alert("clicked");
   }
 
+  // Function to clear all children from parent element
   function removeChildren(node) {
     var fc = node.firstChild;
     while( fc ) {
         node.removeChild( fc );
         fc = node.firstChild;
     }
-  }
+  } // End of removeChildren
 
-  function shuffle(arr){
+  // Fisher Yates shuffle function -- https://bost.ocks.org/mike/shuffle/
+  function shuffle(arr) {
     var m = arr.length, t, i;
     // While there remain elements to shuffle…
     while(m){
@@ -35,27 +42,73 @@ function myFunction(){
       arr[i] = t;
     }
     return arr;
+  } //  End of shuffle
+
+// Function to remove eventhandler from matched tiles
+  function removeEvent(){
+    for (var i = 0; i < clickedTiles.length; i++){
+      clickedTiles[i].removeEventListener("click", compare);
+      console.log(clickedTiles);
+      clickedTiles = [];
+    }
   }
-  //
-  function init(){
+
+// Function to create gameBoard tiles
+  function initGameBoard() {
     // Shuffle images/images
   	shuffle(images);
     // Append tiles to gameboard
   	for ( var i = 0; i < images.length; i++) {
   	    var li = document.createElement("li");
   	    li.className = images[i];
+        li.id = "number" + i;
   	    var textnode = '<i class="material-icons md-48">' + (images[i]) + '</i>';
   	    li.innerHTML = textnode;
   	    gameBoard.appendChild(li);
   	}
+    // Store list items to variable
+    var tiles = gameBoard.children;
+    // Add event listener "click" to tiles and assign compare function
+    for (var i = 0; i < tiles.length; i++) {
+      tiles[i].addEventListener("click", compare); // End of event listener function
+    } // End of for loop
+
+  } // End of initGameBoard
+
+
+
+  // Function to store and compare clicked items
+  function compare(){
+    var clicked = this;
+
+    if(clickedTiles[0]){
+      if(clickedTiles[0].id !== clicked.id){
+        clickedTiles.push(clicked);
+        console.log(clickedTiles);
+      }
+    } else {
+        clickedTiles.push(clicked);
+        console.log(clickedTiles);
+    }
+
+    if(clickedTiles.length > 1){
+      if(clickedTiles[0].classList[0] !== clickedTiles[1].classList[0] ) {
+        alert("Those don't match!");
+        clickedTiles = [];
+      } else {
+        alert("That's a match!");
+        removeEvent;
+      }
+    }
   }
 
   // ---------- Main ----------
-  // Initiate list items in gameboard
-  init();
+  // initiate list items in gameboard
+  initGameBoard();
 
-  shuffleButton.addEventListener("click", function(){
+  newGame.addEventListener("click", function(){
     removeChildren(gameBoard);
-    init();
-  });
-}
+    initGameBoard();
+  }); // End of reset button fuction
+
+} // End of myFunction
