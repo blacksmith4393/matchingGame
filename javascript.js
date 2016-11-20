@@ -47,9 +47,43 @@ function myFunction(){
 // Function to remove eventhandler from matched tiles
   function removeEvent(){
     for (var i = 0; i < clickedTiles.length; i++){
-      clickedTiles[i].removeEventListener("click", compare);
-      console.log(clickedTiles);
+      clickedTiles[i].classList.add('red');
+      console.log(clickedTiles[0].classList)
+    }
+    clickedTiles[0].removeEventListener("click", compare);
+    clickedTiles[1].removeEventListener("click", compare);
+    clickedTiles = [];
+    /*for (var i = 0; i < clickedTiles.length; i++){
+      console.log(clickedTiles[1]);
+      clickedTiles[0].removeEventListener("click", compare);
+      console.log(clickedTiles.length);
       clickedTiles = [];
+      console.log(clickedTiles);
+    }*/
+  }
+
+  // Function to store and compare clicked items
+  function compare(){
+    var clicked = this;
+
+    if(clickedTiles[0]){
+      if(clickedTiles[0].id !== clicked.id){
+        clickedTiles.push(clicked);
+        console.log(clickedTiles);
+      }
+    } else {
+        clickedTiles.push(clicked);
+        console.log(clickedTiles);
+    }
+
+    if(clickedTiles.length == 2){
+      if(clickedTiles[0].classList[0] !== clickedTiles[1].classList[0] ) {
+        alert("Those don't match!");
+        clickedTiles = [];
+      } else {
+        alert("That's a match!");
+        removeEvent();
+      }
     }
   }
 
@@ -76,31 +110,6 @@ function myFunction(){
   } // End of initGameBoard
 
 
-
-  // Function to store and compare clicked items
-  function compare(){
-    var clicked = this;
-
-    if(clickedTiles[0]){
-      if(clickedTiles[0].id !== clicked.id){
-        clickedTiles.push(clicked);
-        console.log(clickedTiles);
-      }
-    } else {
-        clickedTiles.push(clicked);
-        console.log(clickedTiles);
-    }
-
-    if(clickedTiles.length > 1){
-      if(clickedTiles[0].classList[0] !== clickedTiles[1].classList[0] ) {
-        alert("Those don't match!");
-        clickedTiles = [];
-      } else {
-        alert("That's a match!");
-        removeEvent;
-      }
-    }
-  }
 
   // ---------- Main ----------
   // initiate list items in gameboard

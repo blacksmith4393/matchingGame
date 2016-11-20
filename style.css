@@ -53,7 +53,10 @@ h1 , p {
 #gameBoard li:hover {
 	cursor: pointer;
 }
-
+.red{
+	background-color: red;
+	color: red;
+}
 /* Button styling */
 button {
   height: 50px;
