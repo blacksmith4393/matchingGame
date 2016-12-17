@@ -50,31 +50,28 @@ function storeTiles(tile, overlay){
 
    // Conditional to check if a tile has already been clicked
   if(!clickedTiles[0] || clickedTiles[0].id !== tile.id){
-    clickedTiles.push(tile); // Store clicked in clickedTiles array
-    overlay.classList.add('show'); // Show the tile image
+    // Store clicked in clickedTiles array
+    clickedTiles.push(tile);
+    // Show the tile image
+    tile.querySelector('div').classList.add('show');
   }
-  log(clickedTiles);
 }
 
   // Function to remove eventhandler from matched tiles
   function removeEvent(){
     for (var i = 0; i < clickedTiles.length; i++){
       clickedTiles[i].classList.add('match');
-      clickedTiles[i].removeChild(clickedTiles[i].childNodes[1])
-      console.log(clickedTiles[0].classList)
     }
     clickedTiles[0].removeEventListener("click", compare);
     clickedTiles[1].removeEventListener("click", compare);
+
     clickedTiles = [];
   }
-
-
 
   // Function to store and compare clicked items
   function compare(){
     var clicked = this;
     var overlay = clicked.querySelector('div');
-    log(overlay);
 
     storeTiles(clicked, overlay);
 
