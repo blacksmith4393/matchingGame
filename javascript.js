@@ -16,9 +16,10 @@ function myFunction(){
 
 
   // ---------- Functions ----------
+
   //Function to show alert for testing and debugging
-  function showAlert() {
-    alert("clicked");
+  function log(arg) {
+    console.log(arg);
   }
 
   // Function to clear all children from parent element
@@ -45,6 +46,16 @@ function myFunction(){
     return arr;
   } //  End of shuffle
 
+function storeTiles(tile, overlay){
+
+   // Conditional to check if a tile has already been clicked
+  if(!clickedTiles[0] || clickedTiles[0].id !== tile.id){
+    clickedTiles.push(tile); // Store clicked in clickedTiles array
+    overlay.classList.add('show'); // Show the tile image
+  }
+  log(clickedTiles);
+}
+
   // Function to remove eventhandler from matched tiles
   function removeEvent(){
     for (var i = 0; i < clickedTiles.length; i++){
@@ -57,24 +68,14 @@ function myFunction(){
     clickedTiles = [];
   }
 
+
+
   // Function to store and compare clicked items
   function compare(){
     var clicked = this;
     var overlay = clicked.childNodes[1];
 
-     // Conditional to check if a tile has already been clicked
-    if(clickedTiles[0]){
-
-      // Conditional to check if clicked tiles are the same tile. Prevent storing same tile twice
-      if(clickedTiles[0].id !== clicked.id){
-        clickedTiles.push(clicked); // Store clicked in clickedTiles array
-        overlay.classList.add('show'); // Show the tile image
-      }
-
-    } else {
-        clickedTiles.push(clicked); // Store clicked in clickedTiles array
-        overlay.classList.add('show'); // Show the tile image
-    }
+    storeTiles(clicked, overlay);
 
     // Wait 1 second then execute code to check if clicked tiles are a match
     setTimeout(function(){
@@ -91,7 +92,7 @@ function myFunction(){
           removeEvent();
         }
       }
-    }, 1000) // End of setTimeout
+    }, 1000);
 
   }
 
@@ -114,7 +115,7 @@ function myFunction(){
     // Add event listener "click" to tiles and assign compare function
     for (var i = 0; i < tiles.length; i++) {
       tiles[i].addEventListener("click", compare); // End of event listener function
-    } // End of for loop
+    }
 
   } // End of initGameBoard
 
