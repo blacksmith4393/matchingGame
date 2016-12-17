@@ -44,9 +44,7 @@ h1 , p {
 .show {
 	opacity: 0;
 }
-/*.overlay:hover {
-  opacity: 0;
-}*/
+
 /*Game board styling*/
 #gameBoard {
 	width: 347px;
@@ -80,6 +78,7 @@ ul li {
 	background-color: lightgreen;
 	color: white;
 }
+
 /* Button styling */
 button {
   height: 50px;
@@ -105,7 +104,7 @@ button:focus{
 	outline:none;
 }
 
-/*Float children 4th child in the game board*/
+/*Remove margins of 4th child in the game board*/
 #gameBoard:nth-child(4n) {
 	margin: 0;
 }

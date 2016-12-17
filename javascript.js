@@ -1,6 +1,7 @@
-// ---------- Variables---------
+// Game logic stored inside function which is called at the end of html doc
 function myFunction(){
 
+  // ---------- Variables---------
   // Store array of images
   var images = ['android', 'alarm', 'cloud', 'delete', 'android', 'alarm', 'cloud', 'delete'];
 
@@ -44,7 +45,7 @@ function myFunction(){
     return arr;
   } //  End of shuffle
 
-// Function to remove eventhandler from matched tiles
+  // Function to remove eventhandler from matched tiles
   function removeEvent(){
     for (var i = 0; i < clickedTiles.length; i++){
       clickedTiles[i].classList.add('match');
@@ -60,37 +61,41 @@ function myFunction(){
   function compare(){
     var clicked = this;
     var overlay = clicked.childNodes[1];
+
+     // Conditional to check if a tile has already been clicked
     if(clickedTiles[0]){
+
+      // Conditional to check if clicked tiles are the same tile. Prevent storing same tile twice
       if(clickedTiles[0].id !== clicked.id){
-        clickedTiles.push(clicked);
-        overlay.classList.add('show');
-        console.log(overlay.classList);
-        console.log(clickedTiles);
+        clickedTiles.push(clicked); // Store clicked in clickedTiles array
+        overlay.classList.add('show'); // Show the tile image
       }
+
     } else {
-        clickedTiles.push(clicked);
-        overlay.classList.add('show');
-        console.log('else');
-        console.log(clickedTiles);
+        clickedTiles.push(clicked); // Store clicked in clickedTiles array
+        overlay.classList.add('show'); // Show the tile image
     }
+
+    // Wait 1 second then execute code to check if clicked tiles are a match
     setTimeout(function(){
       if(clickedTiles.length == 2){
         if(clickedTiles[0].classList[0] !== clickedTiles[1].classList[0] ) {
-          // alert("NOPE!");
+          //For loop to hide non-matching tiles
           for (var i = 0; i < clickedTiles.length; i++){
             clickedTiles[i].childNodes[1].classList.remove('show');
           }
-          console.log(overlay.classList);
+          // Clear clickedTiles array
           clickedTiles = [];
         } else {
+          // Function to remove eventhandler from matched items and change color
           removeEvent();
         }
       }
-    }, 1000)
+    }, 1000) // End of setTimeout
 
   }
 
-// Function to create gameBoard tiles
+  // Function to create gameBoard tiles
   function initGameBoard() {
     // Shuffle images/images
   	shuffle(images);
