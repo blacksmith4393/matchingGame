@@ -73,7 +73,8 @@ function storeTiles(tile, overlay){
   // Function to store and compare clicked items
   function compare(){
     var clicked = this;
-    var overlay = clicked.childNodes[1];
+    var overlay = clicked.querySelector('div');
+    log(overlay);
 
     storeTiles(clicked, overlay);
 
@@ -83,7 +84,7 @@ function storeTiles(tile, overlay){
         if(clickedTiles[0].classList[0] !== clickedTiles[1].classList[0] ) {
           //For loop to hide non-matching tiles
           for (var i = 0; i < clickedTiles.length; i++){
-            clickedTiles[i].childNodes[1].classList.remove('show');
+            clickedTiles[i].querySelector('div').classList.remove('show');
           }
           // Clear clickedTiles array
           clickedTiles = [];
