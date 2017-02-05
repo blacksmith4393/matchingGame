@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/blacksmith4393/matchingGame/issues"
   },
-  "homepage": "https://github.com/blacksmith4393/matchingGame#readme"
+  "homepage": "https://github.com/blacksmith4393/matchingGame#readme",
+  "dependencies": {
+    "express": "^4.14.1"
+  }
 }
