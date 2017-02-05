@@ -24,10 +24,8 @@ function myFunction(){
 
   // Function to clear all children from parent element
   function removeChildren(node) {
-    var fc = node.firstChild;
-    while( fc ) {
-        node.removeChild( fc );
-        fc = node.firstChild;
+    while( node.hasChildNodes() ) {
+        node.removeChild( node.firstChild );
     }
   } // End of removeChildren
 
@@ -53,20 +51,18 @@ function storeTiles(tile, overlay){
     // Store clicked in clickedTiles array
     clickedTiles.push(tile);
     // Show the tile image
-    tile.querySelector('div').classList.add('show');
+    tile.querySelector('div').classList.toggle('show');
   }
 }
 
-  // Function to remove eventhandler from matched tiles
-  function removeEvent(){
-    for (var i = 0; i < clickedTiles.length; i++){
-      clickedTiles[i].classList.add('match');
-    }
-    clickedTiles[0].removeEventListener("click", compare);
-    clickedTiles[1].removeEventListener("click", compare);
 
-    clickedTiles = [];
+  function disableTiles(tiles){
+    for (var i = 0; i < tiles.length; i++){
+      tiles[i].classList.add('match');
+      tiles[i].disabled = true;
+    }
   }
+
 
   // Function to store and compare clicked items
   function compare(){
@@ -81,17 +77,37 @@ function storeTiles(tile, overlay){
         if(clickedTiles[0].classList[0] !== clickedTiles[1].classList[0] ) {
           //For loop to hide non-matching tiles
           for (var i = 0; i < clickedTiles.length; i++){
-            clickedTiles[i].querySelector('div').classList.remove('show');
+            clickedTiles[i].querySelector('div').classList.toggle('show');
           }
           // Clear clickedTiles array
           clickedTiles = [];
         } else {
           // Function to remove eventhandler from matched items and change color
-          removeEvent();
+          disableTiles(clickedTiles);
+          clickedTiles = [];
         }
       }
     }, 1000);
 
+  }
+
+  function bindClickEvent(node, bindFunction){
+    for (var i = 0; i < node.length; i++){
+      node[i].addEventListener("click", bindFunction);
+    }
+  }
+  function createTile(imageName, id){
+  	    var li = document.createElement("li");
+        var li_button = document.createElement("button");
+
+  	    li_button.className = imageName;
+        li_button.classList.add('tileButton');
+        li_button.id = "number" + id;
+  	    var textNode = '<i class="material-icons md-48">' + imageName + '</i>';
+        textNode += '<div class="overlay"></div>';
+        li_button.innerHTML = textNode;
+        li.appendChild(li_button);
+        return li;
   }
 
   // Function to create gameBoard tiles
@@ -99,22 +115,13 @@ function storeTiles(tile, overlay){
     // Shuffle images/images
   	shuffle(images);
     // Append tiles to gameboard
-  	for ( var i = 0; i < images.length; i++) {
-  	    var li = document.createElement("li");
-  	    li.className = images[i];
-        li.id = "number" + i;
-  	    var textNode = '<i class="material-icons md-48">' + (images[i]) + '</i>';
-        textNode += '<div class="overlay"></div>'
-  	    li.innerHTML = textNode;
-  	    gameBoard.appendChild(li);
-  	}
-    // Store list items to variable
-    var tiles = gameBoard.children;
-    // Add event listener "click" to tiles and assign compare function
-    for (var i = 0; i < tiles.length; i++) {
-      tiles[i].addEventListener("click", compare); // End of event listener function
+    for ( var i = 0; i < images.length; i++){
+      var tile = createTile(images[i], i);
+      gameBoard.appendChild(tile);
     }
 
+    var tileButtons = document.querySelectorAll('.tileButton');
+    bindClickEvent(tileButtons, compare);
   } // End of initGameBoard
 
 

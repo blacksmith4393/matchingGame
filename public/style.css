@@ -56,16 +56,26 @@ h1 , p {
 
 /*Game board li styling*/
 ul li {
-  height: 68px;
+	height: 68px;
   width: 68px;
+	margin: 0 15px 15px 0;
+	padding: 10px;
   text-decoration: none;
   text-align: center;
-  display: inline-block;
+  display: flex;
   float: left;
+	text-decoration: none;
+	border-radius: 8px;
+  vertical-align: center;
+	position: relative;
+}
+
+ul li button {
+	height: 100%;
+	width: 100%;
   background: white;
-  margin: 0 15px 15px 0;
-	padding: 10px;
-  border-radius: 8px;
+	border: none;
+	border-radius: 8px;
   vertical-align: center;
 	position: relative;
 	transition-property: background-color color;
@@ -80,7 +90,7 @@ ul li {
 }
 
 /* Button styling */
-button {
+#newGame {
   height: 50px;
   padding: 0 50px;
   font-size: 18px;
