@@ -1,0 +1,19 @@
+{
+  "name": "matching-game",
+  "version": "1.0.0",
+  "description": "\"Simple matching game\"",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blacksmith4393/matchingGame.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/blacksmith4393/matchingGame/issues"
+  },
+  "homepage": "https://github.com/blacksmith4393/matchingGame#readme"
+}
