@@ -2,17 +2,23 @@
 function myFunction(){
 
   // ---------- Variables---------
-  var game = { images: ['android', 'alarm', 'cloud', 'delete', 'android', 'alarm', 'cloud', 'delete']
+  var game = {
+    images: ['android', 'alarm', 'cloud', 'delete', 'android', 'alarm', 'cloud', 'delete'],
+    cacheDom: function(){
+      this.gameBoard = document.getElementById('gameBoard');
+      this.newGame = document.getElementById('newGame');
+      this.clickedTiles = [];
+    }
 
   };
 
   // var images = ['android', 'alarm', 'cloud', 'delete', 'android', 'alarm', 'cloud', 'delete'];
 
-  var gameBoard = document.getElementById('gameBoard');
-
-  var newGame = document.getElementById('newGame');
-
-  var clickedTiles = [];
+  // var gameBoard = document.getElementById('gameBoard');
+  //
+  // var newGame = document.getElementById('newGame');
+  //
+  // var clickedTiles = [];
 
 
   function removeChildren(node) {
@@ -34,9 +40,9 @@ function myFunction(){
 
   function storeTiles(tile, overlay){
      // Conditional to check if a tile has already been clicked
-    if(!clickedTiles[0] || clickedTiles[0].id !== tile.id){
+    if(!game.clickedTiles[0] || game.clickedTiles[0].id !== tile.id){
       // Store clicked in clickedTiles array
-      clickedTiles.push(tile);
+      game.clickedTiles.push(tile);
       // Show the tile image
       overlay.classList.toggle('show');
     }
@@ -59,6 +65,8 @@ function myFunction(){
     }
   }
 
+
+
   // Function to store and compare clicked items
   function compare(){
     var clicked = this;
@@ -66,33 +74,19 @@ function myFunction(){
     storeTiles(clicked, overlay);
 
     // Wait 1 second then execute code to check if clicked tiles are a match
-    if(clickedTiles.length == 2){
+    if(game.clickedTiles.length == 2){
       //matchTest(clickedTiles);
       setTimeout(function(){
-        matchTest(clickedTiles);
+        if(game.clickedTiles[0].classList[1] !== game.clickedTiles[1].classList[1]){
+          for (var i = 0; i < game.clickedTiles.length; i++){
+            game.clickedTiles[i].querySelector('.overlay').classList.toggle('show');
+          }
+        } else {
+          disableTiles(game.clickedTiles);
+        }
+        game.clickedTiles = [];
       },1000);
-
-      clickedTiles = [];
-
-
-      // setTimeout(function(){
-      //
-      //     if(clickedTiles[0].classList[0] !== clickedTiles[1].classList[0] ) {
-      //       //For loop to hide non-matching tiles
-      //       for (var i = 0; i < clickedTiles.length; i++){
-      //         clickedTiles[i].querySelector('div').classList.toggle('show');
-      //       }
-      //       // Clear clickedTiles array
-      //       clickedTiles = [];
-      //     } else {
-      //       // Function to remove eventhandler from matched items and change color
-      //       disableTiles(clickedTiles);
-      //       clickedTiles = [];
-      //     }
-      //
-      // }, 1000);
     }
-
   }
 
   function bindClickEvent(node, bindFunction){
@@ -119,12 +113,12 @@ function myFunction(){
 
   // Function to create gameBoard tiles
   function initGameBoard() {
-
+    game.cacheDom();
   	shuffle(game.images);
     // Append tiles to gameboard
     for ( var i = 0; i < game.images.length; i++){
       var tile = createTile(game.images[i], i);
-      gameBoard.appendChild(tile);
+      game.gameBoard.appendChild(tile);
     }
 
     var tileButtons = document.querySelectorAll('.tileButton');
