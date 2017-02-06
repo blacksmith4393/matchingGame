@@ -8,8 +8,12 @@ function myFunction(){
       this.gameBoard = document.getElementById('gameBoard');
       this.newGame = document.getElementById('newGame');
       this.clickedTiles = [];
-    }
-
+    },
+    bindClickEvent: function(node, bindFunction){
+      for (var i = 0; i < node.length; i++){
+        node[i].addEventListener("click", bindFunction);
+      }
+    },
   };
 
   // var images = ['android', 'alarm', 'cloud', 'delete', 'android', 'alarm', 'cloud', 'delete'];
@@ -89,11 +93,6 @@ function myFunction(){
     }
   }
 
-  function bindClickEvent(node, bindFunction){
-    for (var i = 0; i < node.length; i++){
-      node[i].addEventListener("click", bindFunction);
-    }
-  }
   function createTile(imageName, id){
   	    var li = document.createElement("li");
         var li_button = document.createElement("button");
@@ -122,7 +121,7 @@ function myFunction(){
     }
 
     var tileButtons = document.querySelectorAll('.tileButton');
-    bindClickEvent(tileButtons, compare);
+    game.bindClickEvent(tileButtons, compare);
   } // End of initGameBoard
 
 
