@@ -69,7 +69,13 @@ function myFunction(){
     if(clickedTiles.length == 2){
       //matchTest(clickedTiles);
       setTimeout(function(){
-        matchTest(clickedTiles);
+        if(clickedTiles[0].classList[1] !== clickedTiles[1].classList[1]){
+          for (var i = 0; i < tilesCollection.length; i++){
+            clickedTiles[i].querySelector('.overlay').classList.toggle('show');
+          }
+        } else {
+          disableTiles(clickedTiles);
+        }
       },1000);
 
       clickedTiles = [];
