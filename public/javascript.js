@@ -6,7 +6,7 @@ function myFunction(){
     images: ['android', 'alarm', 'cloud', 'delete', 'android', 'alarm', 'cloud', 'delete'],
     cacheDom: function(){
       this.gameBoard = document.getElementById('gameBoard');
-      this.newGame = document.getElementById('newGame');
+      this.newGameButton= document.getElementById('newGameButton');
       this.clickedTiles = [];
     },
     bindClickEvent: function(node, bindFunction){
@@ -14,16 +14,15 @@ function myFunction(){
         node[i].addEventListener("click", bindFunction);
       }
     },
+    onTileClick: function(){
+      if(!game.clickedTiles[0] || game.clickedTiles[0].id !== tile.id){
+        storeTile();
+      }
+      if(game.clickedTiles.length == 2){
+        compareTiles();
+      }
+    }
   };
-
-  // var images = ['android', 'alarm', 'cloud', 'delete', 'android', 'alarm', 'cloud', 'delete'];
-
-  // var gameBoard = document.getElementById('gameBoard');
-  //
-  // var newGame = document.getElementById('newGame');
-  //
-  // var clickedTiles = [];
-
 
   function removeChildren(node) {
     while( node.hasChildNodes() ) {
@@ -43,13 +42,11 @@ function myFunction(){
   }
 
   function storeTiles(tile, overlay){
-     // Conditional to check if a tile has already been clicked
-    if(!game.clickedTiles[0] || game.clickedTiles[0].id !== tile.id){
-      // Store clicked in clickedTiles array
-      game.clickedTiles.push(tile);
-      // Show the tile image
-      overlay.classList.toggle('show');
-    }
+    // Store clicked in clickedTiles array
+    game.clickedTiles.push(tile);
+
+    // Show the tile image
+    overlay.classList.toggle('show');
   }
 
   function disableTiles(tiles){
@@ -72,7 +69,7 @@ function myFunction(){
 
 
   // Function to store and compare clicked items
-  function compare(){
+  function compareTiles(){
     var clicked = this;
     var overlay = this.querySelector('.overlay');
     storeTiles(clicked, overlay);
@@ -97,14 +94,13 @@ function myFunction(){
         var li_button = document.createElement("button");
 
   	    // li_button.className = imageName;
-        li_button.classList.add('tileButton', imageName);
-        li_button.id = id.toString();
+        li.classList.add('tileButton', imageName);
+        li.id = id.toString();
 
         var textNode = '<i class="material-icons md-48">' + imageName + '</i>';
         textNode += '<div class="overlay"></div>';
 
-        li_button.innerHTML = textNode;
-        li.appendChild(li_button);
+        li.innerHTML = textNode;
 
         return li;
   }
@@ -113,9 +109,11 @@ function myFunction(){
   function initGameBoard() {
     game.cacheDom();
   	shuffle(game.images);
-    // Append tiles to gameboard
+    
     for ( var i = 0; i < game.images.length; i++){
+      // Create tiles
       var tile = createTile(game.images[i], i);
+      // Append tile to gameboard
       game.gameBoard.appendChild(tile);
     }
 
@@ -129,7 +127,7 @@ function myFunction(){
   // initiate list items in gameboard
   initGameBoard();
 
-  newGame.addEventListener("click", function(){
+  newGameButton.addEventListener("click", function(){
     removeChildren(gameBoard);
     initGameBoard();
   }); // End of reset button fuction
